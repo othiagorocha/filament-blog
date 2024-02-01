@@ -25,8 +25,7 @@ class CreatePost extends Component implements HasForms
         return $form
             ->schema([
                 TextInput::make('title')
-                    ->required(),
-                MarkdownEditor::make('content'),
+                    ->required()
             ])
             ->statePath('data');
     }
