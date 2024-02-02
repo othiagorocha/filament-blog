@@ -1,9 +1,10 @@
 <?php
 
-
-declare(strict_types=1);
-
-use App\Livewire\CreatePost;
+use App\Livewire\Products;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', CreatePost::class);
+Route::get('/produtos', Products::class)->name('products');
+
+Route::get('/', function () {
+    return view('welcome');
+})->name('dashboard');
