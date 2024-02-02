@@ -39,8 +39,9 @@
                                 </svg>
                                 Add product
                             </button>
-                            <div class="flex w-full items-center space-x-3 md:w-auto">
+                            <div class="relative flex w-full items-center space-x-3 md:w-auto">
                                 <button id="actionsDropdownButton" data-dropdown-toggle="actionsDropdown"
+                                    wire:click="toggleDropdown('actions')"
                                     class="flex w-full items-center justify-center rounded-lg border border-gray-200 bg-white px-4 py-2 text-sm font-medium text-gray-900 hover:bg-gray-100 hover:text-primary-700 focus:z-10 focus:outline-none focus:ring-4 focus:ring-gray-200 dark:border-gray-600 dark:bg-gray-800 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white dark:focus:ring-gray-700 md:w-auto"
                                     type="button">
                                     <svg class="-ml-1 mr-1.5 h-5 w-5" fill="currentColor" viewbox="0 0 20 20"
@@ -51,7 +52,7 @@
                                     Actions
                                 </button>
                                 <div id="actionsDropdown"
-                                    class="z-10 hidden w-44 divide-y divide-gray-100 rounded bg-white shadow dark:divide-gray-600 dark:bg-gray-700">
+                                    class="{{ $dropdowns['actions'] ? '' : 'hidden' }} absolute left-0 top-full z-10 w-44 -translate-x-2 divide-y divide-gray-100 rounded bg-white shadow dark:divide-gray-600 dark:bg-gray-700">
                                     <ul class="py-1 text-sm text-gray-700 dark:text-gray-200"
                                         aria-labelledby="actionsDropdownButton">
                                         <li>
@@ -67,6 +68,7 @@
                                     </div>
                                 </div>
                                 <button id="filterDropdownButton" data-dropdown-toggle="filterDropdown"
+                                    wire:click="toggleDropdown('filter')"
                                     class="flex w-full items-center justify-center rounded-lg border border-gray-200 bg-white px-4 py-2 text-sm font-medium text-gray-900 hover:bg-gray-100 hover:text-primary-700 focus:z-10 focus:outline-none focus:ring-4 focus:ring-gray-200 dark:border-gray-600 dark:bg-gray-800 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white dark:focus:ring-gray-700 md:w-auto"
                                     type="button">
                                     <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true"
@@ -83,7 +85,7 @@
                                     </svg>
                                 </button>
                                 <div id="filterDropdown"
-                                    class="z-10 hidden w-48 rounded-lg bg-white p-3 shadow dark:bg-gray-700">
+                                    class="{{ $dropdowns['filter'] ? '' : 'hidden' }} absolute right-0 top-full z-10 w-44 divide-y divide-gray-100 rounded bg-white p-1 shadow dark:divide-gray-600 dark:bg-gray-700">
                                     <h6 class="mb-3 text-sm font-medium text-gray-900 dark:text-white">Choose brand</h6>
                                     <ul class="space-y-2 text-sm" aria-labelledby="filterDropdownButton">
                                         <li class="flex items-center">
@@ -153,6 +155,7 @@
                             </tbody>
                         </table>
                     </div>
+
                     <nav class="flex flex-col items-start justify-between space-y-3 p-4 md:flex-row md:items-center md:space-y-0"
                         aria-label="Table navigation">
                         <span class="text-sm font-normal text-gray-500 dark:text-gray-400">
