@@ -165,49 +165,58 @@
                             <span class="font-semibold text-gray-900 dark:text-white">1000</span>
                         </span>
                         <ul class="inline-flex items-stretch -space-x-px">
+                            <!-- Previous Page Link -->
                             <li>
-                                <a href="#"
-                                    class="ml-0 flex h-full items-center justify-center rounded-l-lg border border-gray-300 bg-white px-3 py-1.5 text-gray-500 hover:bg-gray-100 hover:text-gray-700 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">
-                                    <span class="sr-only">Previous</span>
-                                    <svg class="h-5 w-5" aria-hidden="true" fill="currentColor" viewbox="0 0 20 20"
+                                <button wire:click.prevent="goToPage(1)"
+                                    {{ $page === 1 ? 'disabled' : '' }}
+                                    class="flex h-full items-center justify-center rounded-l-lg border border-gray-300 bg-white px-1.5 py-1.5 leading-tight text-gray-500 hover:bg-gray-100 hover:text-gray-700 disabled:bg-gray-100 disabled:text-gray-400 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">
+                                    <svg stroke="currentColor" fill="currentColor" stroke-width="0"
+                                        viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" class="size-4">
+                                        <path fill="none" d="M0 0h24v24H0z"></path>
+                                        <path d="M17.59 18 19 16.59 14.42 12 19 7.41 17.59 6l-6 6z"></path>
+                                        <path d="m11 18 1.41-1.41L7.83 12l4.58-4.59L11 6l-6 6z"></path>
+                                    </svg>
+                                </button>
+                            </li>
+                            <li>
+                                <button wire:click.prevent="goToPage({{ $page - 1 }})"
+                                    {{ $page === 1 ? 'disabled' : '' }}
+                                    class="flex h-full items-center justify-center border border-gray-300 bg-white px-1.5 py-1.5 leading-tight text-gray-500 hover:bg-gray-100 hover:text-gray-700 disabled:bg-gray-100 disabled:text-gray-400 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">
+                                    <svg class="size-4" aria-hidden="true" fill="currentColor"
+                                        viewbox="0 0 20 20"
                                         xmlns="http://www.w3.org/2000/svg">
                                         <path fill-rule="evenodd"
                                             d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z"
                                             clip-rule="evenodd" />
                                     </svg>
-                                </a>
+                                </button>
                             </li>
+                            <!-- Next Page Link -->
                             <li>
-                                <a href="#"
-                                    class="flex items-center justify-center border border-gray-300 bg-white px-3 py-2 text-sm leading-tight text-gray-500 hover:bg-gray-100 hover:text-gray-700 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">1</a>
-                            </li>
-                            <li>
-                                <a href="#"
-                                    class="flex items-center justify-center border border-gray-300 bg-white px-3 py-2 text-sm leading-tight text-gray-500 hover:bg-gray-100 hover:text-gray-700 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">2</a>
-                            </li>
-                            <li>
-                                <a href="#" aria-current="page"
-                                    class="z-10 flex items-center justify-center border border-primary-300 bg-primary-50 px-3 py-2 text-sm leading-tight text-primary-600 hover:bg-primary-100 hover:text-primary-700 dark:border-gray-700 dark:bg-gray-700 dark:text-white">3</a>
-                            </li>
-                            <li>
-                                <a href="#"
-                                    class="flex items-center justify-center border border-gray-300 bg-white px-3 py-2 text-sm leading-tight text-gray-500 hover:bg-gray-100 hover:text-gray-700 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">...</a>
-                            </li>
-                            <li>
-                                <a href="#"
-                                    class="flex items-center justify-center border border-gray-300 bg-white px-3 py-2 text-sm leading-tight text-gray-500 hover:bg-gray-100 hover:text-gray-700 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">100</a>
-                            </li>
-                            <li>
-                                <a href="#"
-                                    class="flex h-full items-center justify-center rounded-r-lg border border-gray-300 bg-white px-3 py-1.5 leading-tight text-gray-500 hover:bg-gray-100 hover:text-gray-700 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">
-                                    <span class="sr-only">Next</span>
-                                    <svg class="h-5 w-5" aria-hidden="true" fill="currentColor" viewbox="0 0 20 20"
+                                <button wire:click.prevent="goToPage({{ $page + 1 }})"
+                                    {{ $page >= ceil(count($allProducts) / 5) ? 'disabled' : '' }}
+                                    class="flex h-full items-center justify-center border border-gray-300 bg-white px-1.5 py-1.5 leading-tight text-gray-500 hover:bg-gray-100 hover:text-gray-700 disabled:bg-gray-100 disabled:text-gray-400 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">
+                                    <svg class="size-4" aria-hidden="true" fill="currentColor"
+                                        viewbox="0 0 20 20"
                                         xmlns="http://www.w3.org/2000/svg">
                                         <path fill-rule="evenodd"
                                             d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"
                                             clip-rule="evenodd" />
                                     </svg>
-                                </a>
+                                </button>
+                            </li>
+                            <!-- Last Page Link -->
+                            <li>
+                                <button wire:click.prevent="goToPage({{ ceil(count($allProducts) / 5) }})"
+                                    {{ $page >= ceil(count($allProducts) / 5) ? 'disabled' : '' }}
+                                    class="flex h-full items-center justify-center rounded-r-lg border border-gray-300 bg-white px-1.5 py-1.5 leading-tight text-gray-500 hover:bg-gray-100 hover:text-gray-700 disabled:bg-gray-100 disabled:text-gray-400 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">
+                                    <svg stroke="currentColor" fill="currentColor" stroke-width="0" class='size-4'
+                                        viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                        <path fill="none" d="M0 0h24v24H0z"></path>
+                                        <path d="M6.41 6 5 7.41 9.58 12 5 16.59 6.41 18l6-6z"></path>
+                                        <path d="m13 6-1.41 1.41L16.17 12l-4.58 4.59L13 18l6-6z"></path>
+                                    </svg>
+                                </button>
                             </li>
                         </ul>
                     </nav>
