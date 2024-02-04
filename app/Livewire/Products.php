@@ -16,8 +16,9 @@ class Products extends Component
         'actions' => false,
         'filter' => false,
     ];
+    public int $clickCount;
     public string $sortField = '';
-    public bool $sortAsc = true;
+    public ?bool $sortAsc = true;
 
     public function toggleDropdown(string $dropdown)
     {
@@ -34,21 +35,33 @@ class Products extends Component
     public function sortBy(string $field)
     {
         if ($this->sortField === $field) {
-            $this->sortAsc = !$this->sortAsc;
+            $this->clickCount++;
+            if ($this->clickCount % 3 == 0) {
+                $this->sortAsc = null;
+                $this->sortField = '';
+                $this->loadPage();
+            } else {
+                $this->sortAsc = !$this->sortAsc;
+                $this->loadPage();
+            }
         } else {
             $this->sortAsc = true;
+            $this->clickCount = 1;
+            $this->sortField = $field;
+            $this->loadPage();
         }
-        $this->sortField = $field;
-
-        $this->loadPage();
     }
+
 
     public function loadPage()
     {
         if ($this->sortField != '') {
             $this->allProducts = collect($this->allProducts)->sortBy(function ($product) {
                 return floatval($product[$this->sortField]);
-            }, SORT_REGULAR, !$this->sortAsc)->toArray();
+            }, SORT_REGULAR, $this->sortAsc)->toArray();
+        } else {
+            $response = Http::get('https://dummyjson.com/products')->json();
+            $this->allProducts = $response['products'];
         }
         $this->products = array_slice($this->allProducts, ($this->page - 1) * 5, 5);
     }
