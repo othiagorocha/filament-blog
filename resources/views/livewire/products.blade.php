@@ -153,6 +153,7 @@
                   </th>
                   <th scope="col" class="px-4 py-3">
                     <button
+                      wire:click="sortBy('price')"
                       class="flex items-center rounded px-2 py-1 leading-tight transition-colors hover:bg-gray-200/50 hover:shadow">
                       Price
                     </button>

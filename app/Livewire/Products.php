@@ -3,6 +3,7 @@
 namespace App\Livewire;
 
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Log;
 use Livewire\Component;
 
 class Products extends Component
@@ -15,6 +16,8 @@ class Products extends Component
         'actions' => false,
         'filter' => false,
     ];
+    public string $sortField = '';
+    public bool $sortAsc = true;
 
     public function toggleDropdown(string $dropdown)
     {
@@ -28,10 +31,28 @@ class Products extends Component
         $this->loadPage();
     }
 
+    public function sortBy(string $field)
+    {
+        if ($this->sortField === $field) {
+            $this->sortAsc = !$this->sortAsc;
+        } else {
+            $this->sortAsc = true;
+        }
+        $this->sortField = $field;
+
+        $this->loadPage();
+    }
+
     public function loadPage()
     {
+        if ($this->sortField != '') {
+            $this->allProducts = collect($this->allProducts)->sortBy(function ($product) {
+                return floatval($product[$this->sortField]);
+            }, SORT_REGULAR, !$this->sortAsc)->toArray();
+        }
         $this->products = array_slice($this->allProducts, ($this->page - 1) * 5, 5);
     }
+
 
     public function goToPage($page)
     {
@@ -49,7 +70,6 @@ class Products extends Component
                 str_contains(strtolower($product['price']), strtolower($this->search)) ||
                 str_contains(strtolower($product['category']), strtolower($this->search));
         })->toArray();
-
         $this->goToPage(1);
     }
 
